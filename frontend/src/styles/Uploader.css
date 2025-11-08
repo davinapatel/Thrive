@@ -1,0 +1,87 @@
+.diagnose-page {
+    display: flex;
+    flex-direction: column; /* stack h1 and uploader */
+    justify-content: center; /* vertical centering */
+    align-items: center;     /* horizontal centering */
+    min-height: calc(100vh - 70px); /* subtract header height if needed */
+    text-align: center;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* main uploader area */
+.uploader-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; /* spacing between upload box and file info */
+}
+
+/* Upload box */
+.upload-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 500px;
+    height: 500px;
+    border: 2px dashed black;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+/* Uploaded file info row */
+.uploaded-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 500px;
+    padding: 15px 20px;
+    border-radius: 5px;
+    background-color: #e9f0ff;
+    padding-bottom: 10px;
+}
+
+/* File name and delete icon */
+.upload-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Image preview */
+.image-preview {
+    width: 100%;
+    height: 100%;
+}
+
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* fills upload box */
+}
+
+.title{
+    font-size: 2.0rem;
+    font-weight: 700;
+    padding-bottom: 20px;
+}
+
+.help-text{ 
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding-bottom: 20px;
+}
+
+.diagnose-button{
+    margin: 30px auto 0;
+    font-size: 20px;
+    font-weight: 600px;
+    padding: 14px 40px;
+    background-color: #16a085 ;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+}
