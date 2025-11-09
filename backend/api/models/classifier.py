@@ -3,6 +3,7 @@ from PIL import Image
 import numpy as np
 import os
 
+# Model representation of ML Model
 class Classifier:
 
     def __init__(self, class_names):
@@ -10,7 +11,7 @@ class Classifier:
         self.class_names = class_names
 
     def load_model(self):
-        # Loading the model from .keras file so it can be used to make predictions
+        # Loading the ML Model from .keras file so it can be used to make predictions
         base_dir = os.path.dirname(os.path.abspath(__file__))
         model_path = os.path.join(base_dir, "plant-disease-identifier.keras")
 
@@ -40,6 +41,5 @@ class Classifier:
 
         # Extracted predicted class from model
         predicted_class = self.class_names[np.argmax(model_predictions[0])]
-        print(predicted_class)
 
         return predicted_class
