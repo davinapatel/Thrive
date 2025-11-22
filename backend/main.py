@@ -3,9 +3,10 @@ from flask_cors import CORS
 from api.routes.routes import register_routes
 from database import Base, engine, SessionLocal
 from api.models.plant_disease import PlantDisease
+from api.models.user import User
 
 def init_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='api/static')
     CORS(app)
     return app
 

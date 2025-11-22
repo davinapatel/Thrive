@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, DateTime, String
+from sqlalchemy import Column, Integer, String
 from database import Base
 
 # Created Plant Disease model used to create the Plant Disease table in DB

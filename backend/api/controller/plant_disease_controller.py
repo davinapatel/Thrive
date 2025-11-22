@@ -46,42 +46,64 @@ from flask.views import MethodView
 class DiseaseHandler(MethodView):
 
     def __init__(self, SessionLocal):
-        self.session = SessionLocal
+        self.SessionLocal = SessionLocal
 
-    def get(self):
-        session = self.session()  
-        plant_diseases = session.query(PlantDisease).all()
+    def get(self, name=None):
+        session = self.SessionLocal()
 
-        if len(plant_diseases) == 0:
-            response = "No records found"
+        if name != None:
+            record = session.query(PlantDisease).filter(PlantDisease.name == name).first()
+            try:
+                if record:
+                    return jsonify({
+                    "id": record.id,
+                    "name": record.name,
+                    "type": record.type,
+                    "description": record.description,
+                    "treatment": record.treatment
+
+                    }) , 200
+                else:
+                    return jsonify({"Error": "Record not found"}), 404
+            finally:
+                session.close()
         else:
-            response = []
 
-            for disease in plant_diseases:
-                disease_dict = {
-                    "id": disease.id,
-                    "name": disease.name,
-                    "type": disease.type,
-                    "treatment": disease.treatment
-                }
-                response.append(disease_dict)
-        session.close()
-        return jsonify(response), 200
+            plant_diseases = session.query(PlantDisease).all()
+
+            if len(plant_diseases) == 0:
+                response = "No records found"
+            else:
+                response = []
+
+                for disease in plant_diseases:
+                    disease_dict = {
+                        "id": disease.id,
+                        "name": disease.name,
+                        "type": disease.type,
+                        "treatment": disease.treatment
+                    }
+                    response.append(disease_dict)
+            session.close()
+            return jsonify(response), 200
     
     def post(self):
-        session = self.session()
+        try:
+            session = self.SessionLocal()
 
-        data = request.get_json()
-    
-        record = PlantDisease(
-            name = data.get("name"),
-            type = data.get("type"),
-            description = data.get("description"),
-            treatment = data.get("treatment")
-        )
+            data = request.get_json()
+        
+            record = PlantDisease(
+                name = data.get("name"),
+                type = data.get("type"),
+                description = data.get("description"),
+                treatment = data.get("treatment")
+            )
 
-        session.add(record)
-        session.commit()
-        session.close()
+            session.add(record)
+            session.commit()
+            return {"message":"Disease created", "id": record.id}, 201
+        finally:
+            session.close()
 
-        return {"message":"Disease created", "id": record.id}, 201
+        

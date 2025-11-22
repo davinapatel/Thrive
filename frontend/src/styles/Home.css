@@ -1,0 +1,55 @@
+.home-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; 
+  padding: 60px 20px;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 100px;
+  background-color: #f8fff8
+}
+
+.home-header {
+    font-size: 2.8rem;
+    color: #2f4f2f
+}
+.home-title {
+  flex: 1 1 500px;
+  max-width: 600px;
+  margin-top: -20px;
+  font-size: 1.1rem;
+}
+
+.howto-section {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* space between items */
+}
+
+.howto-item {
+  font-size: 1.1rem;
+  color: black;
+  background-color: #c8f0c8;
+  padding: 20px;
+  border-radius: 7px;
+}
+
+.howto-number {
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+.home-image {
+  flex: 1 1 400px;
+  display: flex;
+  justify-content: center;
+}
+
+.home-image img.home {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 12px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}

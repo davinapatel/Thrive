@@ -1,5 +1,5 @@
-import React from "react";
 import "../styles/Header.css";
+import { Link } from "react-router-dom";
 import logo from "../images/logo.jpg"
 
 const Header =() => {
@@ -12,10 +12,18 @@ const Header =() => {
             
             <nav className="navigation-links">
                 <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/diagnose">Disease Diagnosis</a></li>
-                    <li><a href="/contact">Contact</a></li>
+                    <li>
+                        <Link to="/">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/diagnose">Disease Diagnosis</Link>
+                    </li>
+                    <li>
+                        <Link to="/tracker">Disease Tracker</Link>
+                    </li>
+                    <li>
+                        <Link to="/contact">Contact</Link>
+                    </li>
                 </ul>
             </nav>
         </header>

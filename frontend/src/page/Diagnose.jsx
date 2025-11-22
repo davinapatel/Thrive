@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState} from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/Uploader.css";
 import { MdCloudUpload, MdDelete } from "react-icons/md";
 import { AiFillFileImage } from "react-icons/ai";
@@ -9,8 +10,9 @@ const Diagnose = () => {
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileName, setImageFileName] = useState("No selected file");
-  const [prediction, setPrediction] = useState(null);
+  // const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate() ;
   const apiUrl = "http://localhost:3000";
 
 
@@ -21,25 +23,44 @@ const Diagnose = () => {
         return;
     }
 
-    const formData = new FormData();
-    formData.append("file", imageFile)
+    setLoading(true);
 
     try {
-        setLoading(true)
-        const response = await axios.post(apiUrl + "/predict", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
 
-        setPrediction(response.data.prediction);
+      const predictionForm = new FormData();
+      predictionForm.append("file", imageFile);
+
+      console.log("Prediction form donw")
+
+      const predictionResponse = await axios.post(`${apiUrl}/predict`,predictionForm)
+      console.log("Prediction response",predictionResponse)
+
+      const final_prediction = predictionResponse.data.prediction;
+
+      const diseaseResponse = await axios.get(`${apiUrl}/disease/${final_prediction}`)
+
+      const userPredictionForm = new FormData();
+      userPredictionForm.append("user_id","1")
+      userPredictionForm.append("disease_id",diseaseResponse.data.id)
+      userPredictionForm.append("image",imageFile)
+      userPredictionForm.append("prediction",final_prediction)
+
+      await axios.post(`${apiUrl}/userpredictions`, userPredictionForm, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        },
+      });
+
+        // setPrediction(response.data.prediction);
+      navigate("/prediction", {state: { predictionData: predictionResponse.data, imageUrl: image}});
+
     } catch (error) {
-        console.log(error)
+      console.log("error, could not diagnose plant:", error)
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-
-  }
+        
+  };
 
   return (
     <div className="diagnose-page">
@@ -62,7 +83,7 @@ const Diagnose = () => {
                 setImageFile(files[0]);
                 setImageFileName(files[0].name);
                 setImage(URL.createObjectURL(files[0]));
-                setPrediction(null);
+                // setPrediction(null);
               }
             }}
           />
@@ -94,11 +115,11 @@ const Diagnose = () => {
       <Button className="diagnose-button" onClick={handlePlantDiagnosis}>{loading ? "Diagnosing...":"Diagnose Plant!"}</Button>
       
 
-      { prediction && (
+      {/* { prediction && (
         <p className="prediction-result">
             <strong>Prediction:</strong> {prediction}
         </p>
-      )}
+      )} */}
     </div>
   );
 };

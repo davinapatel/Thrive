@@ -10,3 +10,7 @@ https://rest-apis-flask.teclado.com/docs/flask_smorest/api_with_method_views/
 https://www.youtube.com/watch?v=Q2QmST-cSwc
 
 https://medium.com/@ramanbazhanau/mastering-sqlalchemy-a-comprehensive-guide-for-python-developers-ddb3d9f2e829
+
+prediction page - return the image file in respponse, make a call to disease endpoint with disease name to retrieve infor
+
+user page - filter user prediction by their user id and display results
